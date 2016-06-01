@@ -1,0 +1,16 @@
+[
+{
+  "modid": "kragen",
+  "name": "Kragen",
+  "description": "Kragen client mod",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://google.com",
+  "updateUrl": "http://google.com",
+  "authorList": ["Akoot"],
+  "credits": "The Forge and FML guys, for making forge",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
