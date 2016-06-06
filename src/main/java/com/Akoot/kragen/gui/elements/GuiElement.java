@@ -1,6 +1,7 @@
 package com.Akoot.kragen.gui.elements;
 
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
 import com.Akoot.kragen.util.Colors;
 import com.Akoot.kragen.util.Delta;
@@ -34,12 +35,31 @@ public class GuiElement extends Gui
 	{
 		this.mc = mc;
 		this.fr = mc.fontRendererObj;
+		this.x = 0;
+		this.y = 0;
+		this.width = 0;
+		this.height = 0;
 		init();
 	}
 	
 	public Delta getCenter()
 	{
 		return new Delta(getWidth() / 2, getHeight() / 2);
+	}
+	
+	public void drawStringWithScale(String text, int x, int y, int color, double scale)
+	{
+		GL11.glPushMatrix();
+		GL11.glScalef((float) (scale), (float) (scale), (float) (scale));
+		x *= 1 + scale * (scale * 4);
+		y *= 1 + scale * (scale * 4);
+		fr.drawString(text, x, y, color);
+		GL11.glPopMatrix();
+	}
+	
+	public void drawCenteredStringWithScale(String text, int x, int y, int color, double scale)
+	{
+		drawStringWithScale(text, (int)(x - fr.getStringWidth(text) / 2), y, color, scale);
 	}
 	
 	public int getWidth()

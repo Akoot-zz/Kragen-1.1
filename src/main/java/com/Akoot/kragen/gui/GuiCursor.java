@@ -22,4 +22,9 @@ public class GuiCursor extends GuiScreen
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{	
 	}
+	
+	public boolean doesGuiPauseGame()
+	{
+		return false;
+	}
 }

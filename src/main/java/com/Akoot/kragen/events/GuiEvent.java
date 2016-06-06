@@ -4,6 +4,7 @@ import com.Akoot.kragen.gui.GuiCursor;
 import com.Akoot.kragen.gui.elements.GuiClickable;
 import com.Akoot.kragen.gui.elements.GuiDraggable;
 import com.Akoot.kragen.input.Keybinds;
+import com.Akoot.kragen.modules.Module;
 import com.Akoot.kragen.modules.Modules;
 
 import net.minecraft.client.Minecraft;
@@ -29,14 +30,13 @@ public class GuiEvent extends Gui
 	{
 		if(event.getType() == ElementType.TEXT)
 		{
-			//if(Modules.isEnabled(Modules.XYZPOSITION)) drawXYZ.render();		
-			Modules.render(Modules.PLAYERS);
-
-			if(Keybinds.KEY_CURSOR.isToggled && mc.currentScreen == null)
+			for(Module mod: Modules.getModules()) if(mod.shouldRender() && mod.isEnabled()) mod.render();
+			
+			if(Keybinds.KEY_CURSOR.isDown && mc.currentScreen == null)
 			{
 				mc.displayGuiScreen(new GuiCursor());
 			}
-			if((!Keybinds.KEY_CURSOR.isToggled || Keybinds.KEY_EXIT.isDown) && mc.currentScreen instanceof GuiCursor)
+			if((!Keybinds.KEY_CURSOR.isDown) && mc.currentScreen instanceof GuiCursor)
 			{
 				mc.displayGuiScreen(null);
 			}

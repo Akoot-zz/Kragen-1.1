@@ -11,7 +11,8 @@ public enum Modules
 	ELYTRA,
 	MAINMENU,
 	PLAYERS,
-	CURSOR
+	CURSOR,
+	AUTOBLOCK
 	;
 
 	public static boolean isEnabled(Modules mod)
@@ -21,13 +22,14 @@ public enum Modules
 	
 	public static void setEnabled(Modules mod, boolean enabled)
 	{
-		Configs.getModules().set(mod.name().toLowerCase(), enabled);
+		if(Configs.getModules().getBoolean(mod.name().toLowerCase()) != enabled) Configs.getModules().set(mod.name().toLowerCase(), enabled);
 	}
 	
 	public static List<Module> getModules()
 	{
 		List<Module> modules = new ArrayList<Module>();
 		modules.add(new PlayerInfo());
+		//modules.add(new AutoBlock());
 		return modules;
 	}
 	

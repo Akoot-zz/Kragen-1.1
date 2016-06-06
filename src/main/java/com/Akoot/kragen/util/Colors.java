@@ -1,5 +1,6 @@
 package com.Akoot.kragen.util;
 
+import java.awt.Color;
 import java.util.Random;
 
 public class Colors
@@ -8,12 +9,29 @@ public class Colors
 	
 	public static int getColor(double a, int r, int g, int b)
 	{
-		return (int) Long.parseLong(String.format("%02x%02x%02x%02x", (int) (a * 255), r, g, b), 16);
+		return (int) Long.parseLong(String.format("%02x%02x%02x%02x", (int) (a * 255.0), r, g, b), 16);
 	}
 	
 	public static int getColor(int r, int g, int b)
 	{
 		return getColor(1, r, g ,b);
+	}
+	
+	public static int colorGradient(int minColor, int maxColor, double percent)
+	{
+		Color x = new Color(minColor);
+		Color y = new Color(maxColor);
+		
+		float blending = (float) percent;
+
+		float inverse_blending = 1 - blending;
+
+		float red =   x.getRed()   * blending   +   y.getRed()   * inverse_blending;
+		float green = x.getGreen() * blending   +   y.getGreen() * inverse_blending;
+		float blue =  x.getBlue()  * blending   +   y.getBlue()  * inverse_blending;
+		Color blended = new Color (red / 255, green / 255, blue / 255);
+		
+		return Colors.getColor(blended.getRGB());
 	}
 	
 	public static int getColor(double a, String hex)
@@ -34,12 +52,12 @@ public class Colors
 	
 	public static int getColor(int a, String hex)
 	{
-		return getColor(a, Integer.parseInt(hex.replaceAll("#", ""), 16));
+		return getColor(a, Integer.parseInt(hex.replace("#", ""), 16));
 	}
 	
 	public static int getColor(String hex)
 	{
-		return getColor(1, Integer.parseInt(hex.replaceAll("#", ""), 16));
+		return getColor(1, Integer.parseInt(hex.replace("#", ""), 16));
 	}
 	
 	public static int randomColor(int min, int max)

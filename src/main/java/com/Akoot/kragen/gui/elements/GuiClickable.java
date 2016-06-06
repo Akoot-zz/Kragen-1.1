@@ -2,6 +2,7 @@ package com.Akoot.kragen.gui.elements;
 
 import org.lwjgl.input.Mouse;
 
+import com.Akoot.kragen.gui.GuiCursor;
 import com.Akoot.kragen.util.Delta;
 
 import net.minecraft.client.Minecraft;
@@ -18,7 +19,7 @@ public class GuiClickable extends GuiElement
 	
 	public boolean isOver()
 	{
-		return getMouse().x >= x && getMouse().y >= y && getMouse().x < x + width && getMouse().y < y + height;
+		return mc.currentScreen != null && (getMouse().x >= x && getMouse().y >= y && getMouse().x < x + width && getMouse().y < y + height);
 	}
 	
 	public boolean isDown()
