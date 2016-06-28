@@ -1,4 +1,4 @@
-package com.Akoot.kragen.gui.elements;
+package com.Akoot.kragen.client.gui.elements;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -15,11 +15,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class GuiElement extends Gui
 {
@@ -102,6 +98,8 @@ public class GuiElement extends Gui
 	public void init() {}
 	
 	public void render() {}
+	
+	public void tick() {}
 	
 	public int animate(int current, int var)
 	{

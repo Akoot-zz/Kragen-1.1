@@ -1,5 +1,9 @@
 package com.Akoot.kragen.input;
 
+import com.Akoot.kragen.refrence.Reference;
+
+import net.minecraft.client.settings.KeyBinding;
+
 public class Keybind
 {
 	public int bind1;
@@ -8,20 +12,27 @@ public class Keybind
 	public boolean isDown;
 	public boolean isToggled;
 	
-	public boolean toggle;
+	public String name;
 	
-	public Keybind(int bind1, int bind2)
+	public KeyBinding keybinding;
+	
+	public Keybind(String name, int bind)
 	{
-		this.bind1 = bind1;
-		this.bind2 = bind2;
-		this.toggle = false;
+		this(name, bind, bind);
 	}
 	
-	public Keybind(int bind1, int bind2, boolean toggle)
+	/**
+	 * @param name Display name for menus
+	 * @param bind1 Primary keybind
+	 * @param bind2 Alternate keybind
+	 * @param toggle Whether or not it shall be toggled
+	 */
+	public Keybind(String name, int bind1, int bind2)
 	{
+		this.name = name;
 		this.bind1 = bind1;
 		this.bind2 = bind2;
-		this.toggle = toggle;
+		this.keybinding = new KeyBinding(name, bind1, Reference.MOD_NAME);
 	}
 
 	public void toggle()

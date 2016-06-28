@@ -8,39 +8,27 @@ import org.lwjgl.input.Keyboard;
 import com.Akoot.kragen.modules.Module;
 import com.Akoot.kragen.modules.Modules;
 
+import net.minecraftforge.fml.common.gameevent.InputEvent;
+
 public class Keybinds
 {
-	private static List<Keybind> keybinds = new ArrayList<Keybind>();
+	public static Keybind KEY_CURSOR = new Keybind("Show menu", 56, 184);
+	public static Keybind KEY_INV_PLAYER = new Keybind("Show player inventory", 47);
 
-	public static Keybind KEY_CURSOR = new Keybind(56, 184, true);
-	public static Keybind KEY_INV_PLAYER = new Keybind(47, 47, false);
-
-	public static void init()
+	public static Keybind[] getBinds()
 	{
-		keybinds.add(KEY_CURSOR);
-		keybinds.add(KEY_INV_PLAYER);
-	}
-
-	public static List<Keybind> getBinds()
-	{
+		Keybind[] keybinds = {KEY_CURSOR, KEY_INV_PLAYER};
 		return keybinds;
 	}
-
-	public static void tick()
+	
+	public void handleKeyInputEvent(InputEvent.KeyInputEvent event)
 	{
-		for(Module mod: Modules.getModules())
+		for(Module mod: Modules.getModules()) if(mod.keybind.keybinding.isPressed()) mod.setEnabled(!mod.isEnabled());
+		for(Keybind keybind: getBinds())
 		{
-			keybinds.add(mod.keybind);
-		}
-		for(Keybind keybind: keybinds)
-		{
-			if(Keyboard.isKeyDown(keybind.bind1) || Keyboard.isKeyDown(keybind.bind2))
-			{
-				if(keybind.toggle && !keybind.isDown) keybind.toggle();
-				keybind.press();
-				return;
-			}
-			keybind.release();
+			if(keybind.keybinding.isPressed()) keybind.toggle();
+			else if(keybind.keybinding.isKeyDown()) keybind.press();
+			else keybind.release();
 		}
 	}
 }

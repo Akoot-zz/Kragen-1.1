@@ -1,48 +1,43 @@
 package com.Akoot.kragen.modules;
 
-import com.Akoot.kragen.Kragen;
-import com.Akoot.kragen.gui.elements.GuiDraggable;
+import com.Akoot.kragen.client.gui.elements.GuiDraggable;
 import com.Akoot.kragen.input.Keybind;
 
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 
 public class Module extends GuiDraggable
 {
 	public Modules mod;
 	public Keybind keybind;
-	public boolean render;
+	protected boolean enabled;
+	
+	protected String name;
+	protected String description;
 	
 	public Module()
 	{
 		super(Minecraft.getMinecraft());
 	}
 	
-	public boolean shouldRender()
+	public void setEnabled(boolean enable)
 	{
-		return render;
+		this.enabled = enable;
 	}
 	
 	public boolean isEnabled()
 	{
-		return Modules.isEnabled(mod);
+		return enabled;
 	}
 	
-	public void enable()
+	public String getName()
 	{
-		Modules.setEnabled(mod, true);
+		return name;
 	}
 	
-	public void disable()
+	public String getDescription()
 	{
-		Modules.setEnabled(mod, false);
-	}
-	/**
-	 * Add this if you want it to be clicked and dragged, or to render things
-	 */
-	@Override
-	public void render()
-	{
-		super.render();
+		return description;
 	}
 	
 	public void onEntityUpdate() {}

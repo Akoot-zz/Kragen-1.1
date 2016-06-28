@@ -4,10 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
-import com.Akoot.kragen.gui.elements.GuiClickable;
+import com.Akoot.kragen.client.gui.elements.GuiClickable;
 import com.Akoot.kragen.input.Keybind;
 import com.Akoot.kragen.input.Keybinds;
 import com.Akoot.kragen.util.Colors;
@@ -17,32 +14,26 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.text.TextFormatting;
 
 public class PlayerInfo extends Module
 {
 	private List<EntityPlayer> players;
-
-	protected final ResourceLocation icons = new ResourceLocation("textures/gui/icons.png");
-
+	
 	public PlayerInfo()
 	{
 		this.mod = Modules.PLAYERS;
-		this.render = true;
-		this.keybind = new Keybind(25, 25, true);
+		this.keybind = new Keybind("Show player list", 25);
 		this.height = 11;
+		this.name = "Player Info";
+		this.description = "Draws information on nearby players";
 	}
-
-	public void render()
+	
+	public void sortPlayers()
 	{
-		players = mc.theWorld.playerEntities;
-		int max = 5;
+		if(players.contains(mc.thePlayer) && !mc.theWorld.isRemote) players.remove(mc.thePlayer);
 		Collections.sort(players, new Comparator<EntityPlayer>()
 		{
 			@Override
@@ -55,7 +46,14 @@ public class PlayerInfo extends Module
 				return 0;
 			}
 		});
-		for(EntityPlayer player: players) if(/*player != mc.thePlayer &&*/ players.indexOf(player) <= max) renderPlayerInfo(player, players.indexOf(player));
+	}
+
+	public void render()
+	{
+		players = mc.theWorld.playerEntities;
+		int max = 5;
+		sortPlayers();
+		for(EntityPlayer player: players) if(players.indexOf(player) < max) renderPlayerInfo(player, players.indexOf(player));
 		if(players.size() > max)
 		{
 			int left = players.size() - max;
@@ -67,7 +65,6 @@ public class PlayerInfo extends Module
 
 	public void renderPlayerInfo(EntityPlayer player, int place)
 	{
-		//place -= 1;
 		int yy = y + place * height;
 		PlayerHead info = new PlayerHead(mc, player);
 		info.draw(x, yy, height);
@@ -109,7 +106,7 @@ class PlayerHead extends GuiClickable
 
 		//distance = 420;
 
-		width = size + dist + name + 2;
+		width = size + dist + name + 3;
 
 		int centerY = y + (size / 4); 
 
@@ -144,35 +141,12 @@ class PlayerHead extends GuiClickable
 			int health = 0xffFF3043;
 			int hunger = 0xffF87616;
 			
-			if(player.isPotionActive(MobEffects.HUNGER))
-			{
-				hunger = 0xff759D41;
-			}
-			
-			if(player.isPotionActive(MobEffects.HEALTH_BOOST) || player.isPotionActive(MobEffects.REGENERATION))
-			{
-				health = 0xffFF7FB5;
-			}
-			
-			if(player.isPotionActive(MobEffects.RESISTANCE))
-			{
-				health = 0xffCF98E8;
-			}
-			
-			if(player.isPotionActive(MobEffects.WEAKNESS))
-			{
-				health = 0xff9C3555;
-			}
-			
-			if(player.isPotionActive(MobEffects.POISON))
-			{
-				health = 0xff759D41;
-			}
-			
-			if(player.isPotionActive(MobEffects.WITHER))
-			{
-				health = 0xff222222;
-			}
+			if(player.isPotionActive(MobEffects.HUNGER)) hunger = 0xff759D41;			
+			if(player.isPotionActive(MobEffects.HEALTH_BOOST) || player.isPotionActive(MobEffects.REGENERATION)) health = 0xffFF7FB5;		
+			if(player.isPotionActive(MobEffects.RESISTANCE)) health = 0xffCF98E8;	
+			if(player.isPotionActive(MobEffects.WEAKNESS)) health = 0xff9C3555;			
+			if(player.isPotionActive(MobEffects.POISON)) health = 0xff759D41;			
+			if(player.isPotionActive(MobEffects.WITHER)) health = 0xff222222;
 			
 			//health
 			drawRect(x + width + 1, y + 1, x + width + (int) (bar * percentHealth) - bar2 - 1, y + (height / 2), health);

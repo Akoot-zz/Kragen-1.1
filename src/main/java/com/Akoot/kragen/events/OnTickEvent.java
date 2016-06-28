@@ -21,7 +21,7 @@ public class OnTickEvent
 	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event)
 	{
-		Keybinds.tick();
+		for(Module mod: Modules.getModules()) mod.tick();
 	}
 	
 	@SubscribeEvent

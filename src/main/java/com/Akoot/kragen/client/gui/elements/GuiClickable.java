@@ -1,9 +1,6 @@
-package com.Akoot.kragen.gui.elements;
+package com.Akoot.kragen.client.gui.elements;
 
 import org.lwjgl.input.Mouse;
-
-import com.Akoot.kragen.gui.GuiCursor;
-import com.Akoot.kragen.util.Delta;
 
 import net.minecraft.client.Minecraft;
 
@@ -27,10 +24,5 @@ public class GuiClickable extends GuiElement
 		return isOver() && Mouse.isButtonDown(0);
 	}
 	
-	public void click(){}
-	
-	public void render()
-	{
-		//click
-	}
+	public void click() {}
 }
