@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, acceptedMinecraftVersions="[1.9,1.10,1.10.2)", guiFactory = Reference.GUI_FACTORY_CLASS)
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, guiFactory = Reference.GUI_FACTORY_CLASS)
 public class Kragen 
 {
 	public static Minecraft mc;
@@ -34,8 +34,8 @@ public class Kragen
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
-		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
-		MinecraftForge.EVENT_BUS.register(new ConfigurationHandler());
+//		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
+//		MinecraftForge.EVENT_BUS.register(new ConfigurationHandler());
 		proxy.preInit();
 	}
 

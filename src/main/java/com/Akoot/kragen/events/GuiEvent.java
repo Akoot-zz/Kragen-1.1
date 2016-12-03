@@ -33,7 +33,7 @@ public class GuiEvent extends Gui
 	{
 		if(event.getType() == ElementType.TEXT)
 		{
-			for(Module mod: Modules.getModules()) if(mod.isEnabled()) mod.render();
+			for(Module mod: Modules.getModules()) mod.render();
 			
 			if(Keybinds.KEY_CURSOR.isDown && mc.currentScreen == null) mc.displayGuiScreen(new GuiCursor());
 			if((!Keybinds.KEY_CURSOR.isDown) && mc.currentScreen instanceof GuiCursor) mc.displayGuiScreen(null);

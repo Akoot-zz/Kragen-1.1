@@ -1,6 +1,8 @@
 package com.Akoot.kragen.modules;
 
 import com.Akoot.kragen.input.Keybind;
+import com.Akoot.kragen.util.Colors;
+import com.mojang.realmsclient.gui.ChatFormatting;
 
 import net.minecraft.client.Minecraft;
 
@@ -17,11 +19,14 @@ public class AutoBlock extends Module
 	@Override
 	public void render()
 	{
+		String txt = "autoblock is on m8";
+		int length = fr.getStringWidth(txt) + 2;
+		drawRect(this.getCenter().x - length / 2, 0, this.getCenter().x + length / 2, 10, Colors.getColor(0.2, 0x000000));
+		this.drawCenteredString(fr, ChatFormatting.AQUA + txt, this.getCenter().x, 1, 0xffffffff);
 	}
 
 	@Override
 	public void onEntityUpdate()
 	{
-		
 	}
 }
